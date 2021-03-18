@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+    <body>
+        <p align="center"> 
+        <canvas id="folha" width="1000" height="750">
+            <script>
+
+            window.onload = function() {
+                iniciar ();
+                setInterval(executar, 1000/30);
+            }
+
+            function iniciar () {
+
+            folhaDesenho = document.getElementById("folha");
+            areaDesenho = folhaDesenho.getContext("2d");
+
+            widthCampo = 1000;
+            heightCampo = 750;
+                
+            widthLinha = 5;
+                
+            heightRaquete = 50 ;                
+            widthRaquete = 10;
+            effectRaquete = 0.3;
+                
+            ballDiametro = 5;
+            ballX = ballY =10;
+            velocityBallX = velocityBallY = 3;
+
+            player1 = player2 = 40;
+            scorePlayer1 = scorePlayer2 = 0;
+            velocityPlayer2 = 5
+
+            //movimento player1
+            folhaDesenho.addEventListener("mousemove", function(e) {
+                player1 = e.clientY - heightRaquete/2;
+            })
+            }
+
+            function executar () {
+                desenhos ();
+                calculos ();
+            }
+
+            function desenhos () {
+
+                areaDesenho.fillStyle = "#286047";
+                areaDesenho.fillRect(0, 0, widthCampo, heightCampo);
+
+                areaDesenho.fillStyle = "#ffffff";
+
+                //linha meio
+                areaDesenho.fillRect(widthCampo/2 - widthLinha/2, 0, widthLinha, heightCampo);
+            
+                //desenha bola
+                areaDesenho.fillRect(ballX-ballDiametro/2, ballY-ballDiametro/2, ballDiametro, ballDiametro);
+
+                //raquete1
+                areaDesenho.fillRect(0, player1, widthRaquete, heightRaquete);
+                //raquete2
+                areaDesenho.fillRect(widthCampo-widthRaquete, player2, widthRaquete, heightRaquete);
+                
+                //contadores
+                
+                areaDesenho.fillText("HUMANS: " + scorePlayer1 + " points", 100, 100);
+                areaDesenho.fillText("COMPUTERS: " + scorePlayer2+ " points", widthCampo-200, 100)
+                }
+
+            function calculos () { 
+
+                ballX=ballX+velocityBallX;
+                ballY=ballY+velocityBallY; 
+
+                //verificacao laterial superior
+                if(ballY<0 && velocityBallY<0) {
+                    velocityBallY = -velocityBallY;
+                }
+                //verificacao lateral inferior
+                if(ballY>heightCampo && velocityBallY>0){
+                    velocityBallY = -velocityBallY;
+                }                
+                //verificacao ponto player2
+                if (ballX<0) {
+                    if(ballY>player1 && ballY<player1+heightRaquete) {
+                        //rebater a bola
+                        velocityBallX = -velocityBallX;
+
+                        var diferenceY = ballY - (player1+heightRaquete/2);
+                        velocityBallY = diferenceY*effectRaquete;
+
+                    } else {
+                        //pontos player2
+                        scorePlayer2 = scorePlayer2+1;
+
+                        //colocar bola no centro
+                        continuar ();                    
+                    }
+                }
+
+                //verificacao ponto player1
+                if (ballX>widthCampo) {
+                    if(ballY>player2 && ballY<player2+heightRaquete) {
+
+                        velocityBallX = -velocityBallX;
+
+                        var diferenceY = ballY - (player2+heightRaquete/2);
+                        velocityBallY = diferenceY*effectRaquete;
+
+                    } else {
+                        scorePlayer1 = scorePlayer1+1;
+                        
+                        continuar ();
+                    }
+                }
+
+                //movimento computador
+                if(player2 + heightRaquete/2 < ballY){
+                    player2 = player2 + velocityPlayer2;
+                    
+                    } else { 
+                        player2 = player2 - velocityPlayer2;
+                    }
+
+                }           
+            
+            function continuar () {
+                // colocar bola no centro
+                ballX = widthCampo/2;
+                ballY = heightCampo/2;
+                velocityBallX = -velocityBallX;
+                velocityBallY = 3;
+            }
+
+            </script>
+        </canvas>
+        </p>
+    </body>
+</html>

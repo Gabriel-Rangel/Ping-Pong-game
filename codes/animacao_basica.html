@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <canvas id="folha" width="600" height="500">
+            <script>
+
+            window.onload = function() {
+                setInterval(executar, 1000/30);
+            }
+
+            var ballX = ballY =5;
+
+            function executar () {
+            
+                var folhaDesenho = document.getElementById("folha");
+                var areaDesenho = folhaDesenho.getContext("2d");
+
+                var widthCampo = 600;
+                var heightCampo = 500;
+                
+                var widthLinha = 5;
+                
+                var balldiametro = 5;
+
+                areaDesenho.fillStyle = "#286047";
+                areaDesenho.fillRect(0, 0, widthCampo, heightCampo);
+
+                areaDesenho.fillStyle = "#ffffff";
+
+                areaDesenho.fillRect(widthCampo/2 - widthLinha/2, 0, widthLinha, heightCampo);
+            
+                //desenha bola
+                areaDesenho.fillRect(ballX-balldiametro/2, ballY-balldiametro/2, balldiametro, balldiametro);
+
+                ballX=ballX+1;
+                ballY=ballY+1; 
+
+            }
+
+  
+           
+         
+
+
+            </script>
+        </canvas>
+    </body>
+</html>

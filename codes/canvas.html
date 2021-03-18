@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+    <body>
+        
+        <canvas id="folha" width="600" height="500"></canvas>
+
+        <script>
+            var folhaDesenho = document.getElementById("folha");
+            var areaDesenho = folhaDesenho.getContext("2d");
+
+            var widthCampo = 600;
+            var heigthCampo = 500;
+            var widthLinha = 5;
+            var widthBola = 5;
+            var heightRaquete = 50 
+            
+            areaDesenho.fillStyle = "#286047";
+
+            areaDesenho.fillRect(0, 0, widthCampo, heigthCampo);
+            
+            areaDesenho.fillStyle = "#ffffff";
+
+            //linha
+            areaDesenho.fillRect(widthCampo/2 - widthLinha/2, 0, widthLinha, heigthCampo);
+            //raquete1
+            areaDesenho.fillRect(0, 30, widthLinha, heightRaquete);
+            //raquete2
+            areaDesenho.fillRect(595, 300, widthLinha, heightRaquete);
+            //bola
+            areaDesenho.fillRect(30, 30, widthBola, widthBola);
+        
+        
+         </script>        
+
+    </body>
+</html>

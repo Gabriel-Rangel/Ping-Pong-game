@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <canvas id="folha" width="600" height="500">
+            <script>
+
+            window.onload = function() {
+                setInterval(executar, 1000/30);
+            }
+
+            var ballX = ballY =10;
+            var velocityBallX = velocityBallY = 3;
+            var player1 = player2 = 40;
+            var scorePlayer1 = scorePlayer2 = 0;
+
+
+            function executar () {
+            
+                var folhaDesenho = document.getElementById("folha");
+                var areaDesenho = folhaDesenho.getContext("2d");
+
+                var widthCampo = 600;
+                var heightCampo = 500;
+                
+                var widthLinha = 5;
+                
+                var heightRaquete = 50 ;
+                var widthRaquete = 5;
+
+                var effectRaquete = 0.3;
+                
+                var ballDiametro = 5;
+
+                areaDesenho.fillStyle = "#286047";
+                areaDesenho.fillRect(0, 0, widthCampo, heightCampo);
+
+                areaDesenho.fillStyle = "#ffffff";
+
+                areaDesenho.fillRect(widthCampo/2 - widthLinha/2, 0, widthLinha, heightCampo);
+            
+                //desenha bola
+                areaDesenho.fillRect(ballX-ballDiametro/2, ballY-ballDiametro/2, ballDiametro, ballDiametro);
+
+                //raquete1
+                areaDesenho.fillRect(0, player1, widthRaquete, heightRaquete);
+                //raquete2
+                areaDesenho.fillRect(widthCampo-widthRaquete, player2, widthRaquete, heightRaquete);
+
+                ballX=ballX+velocityBallX;
+                ballY=ballY+velocityBallY; 
+
+                //verificacao laterial superior
+                if(ballY<0 && velocityBallY<0) {
+                    velocityBallY = -velocityBallY;
+                }
+                //verificacao lateral inferior
+                if(ballY>heightCampo && velocityBallY>0){
+                    velocityBallY = -velocityBallY;
+                }
+                
+                //verificacao ponto player2
+                if (ballX<0) {
+                    if(ballY>player1 && ballY<player1+heightRaquete) {
+                        //rebater a bola
+                        velocityBallX = -velocityBallX;
+
+                        var diferenceY = ballY - (player1+heightRaquete/2);
+                        velocityBallY = diferenceY*effectRaquete;
+
+                    } else {
+                        //pontos player2
+                        scorePlayer2 = scorePlayer2+1
+                        //colocar bola no centro
+                    }
+
+                }
+
+                //verificacao ponto player1
+                if (ballX>widthCampo) {
+                    if(ballY>player2 && ballY<player2+heightRaquete) {
+
+                        velocityBallX = -velocityBallX;
+
+                        var diferenceY = ballY - (player2+heightRaquete/2);
+                        velocityBallY = diferenceY*effectRaquete;
+
+                    } else {
+                        scorePlayer1 = scorePlayer1+1
+                    }
+                }
+
+
+            }           
+         
+
+
+            </script>
+        </canvas>
+    </body>
+</html>

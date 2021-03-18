@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+    </head>
+    <body>
+        <canvas id="folha" width="600" height="500">
+            <script>
+
+            window.onload = function() {
+                setInterval(executar, 1000/30);
+            }
+
+            var ballX = ballY =10;
+            var velocityBallX = velocityBallY = 3;
+
+            function executar () {
+            
+                var folhaDesenho = document.getElementById("folha");
+                var areaDesenho = folhaDesenho.getContext("2d");
+
+                var widthCampo = 600;
+                var heightCampo = 500;
+                var widthLinha = 5;
+                
+                var ballDiametro = 5;
+
+                areaDesenho.fillStyle = "#286047";
+                areaDesenho.fillRect(0, 0, widthCampo, heightCampo);
+
+                areaDesenho.fillStyle = "#ffffff";
+
+                areaDesenho.fillRect(widthCampo/2 - widthLinha/2, 0, widthLinha, heightCampo);
+            
+                //desenha bola
+                areaDesenho.fillRect(ballX-ballDiametro/2, ballY-ballDiametro/2, ballDiametro, ballDiametro);
+
+                ballX=ballX+velocityBallX;
+                ballY=ballY+velocityBallY; 
+
+                //verificacao laterial superior
+                if(ballY<0 && velocityBallY<0) {
+                    velocityBallY = -velocityBallY;
+                }
+                //verificacao lateral inferior
+                if(ballY>heightCampo && velocityBallY>0){
+                    velocityBallY = -velocityBallY;
+                }
+                
+                if (ballX<0 && velocityBallX<0) {
+                    velocityBallX = -velocityBallX;
+                }
+
+                if (ballX>widthCampo && velocityBallX>0){
+                    velocityBallX = - velocityBallX;
+                }
+            }           
+         
+
+
+            </script>
+        </canvas>
+    </body>
+</html>
